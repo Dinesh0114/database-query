@@ -6,20 +6,22 @@ DDL
      2.It consist of sql commands which is used to define database schema..
      3.It is mainly used to create and modify the structure of database and objects...
 DDL commands are:
-*CREATE – is used to create the database or its objects.
-*DROP – is used to delete objects from the database..
+*CREATE â€“ is used to create the database or its objects.
+*DROP â€“ is used to delete objects from the database..
 *ALTER-is used to alter the structure of the database....
-*TRUNCATE–is used to remove all records from a table, including all spaces allocated for the records are removed....
-*COMMENT –is used to add comments to the data dictionary.....
-*RENAME –is used to rename an object existing in the database......
+*TRUNCATEâ€“is used to remove all records from a table, including all spaces allocated for the records are removed....
+*COMMENT â€“is used to add comments to the data dictionary.....
+*RENAME â€“is used to rename an object existing in the database......
 
 
 Create a table Department with id name with proper constraints.
 *create table department(
+//why not null?
 id int NOT NULL PRIMARY KEY,
 name varchar2(30) NOT NULL);
 
 Create a table Employee with id, name and salary and deptid with proper constraints.
+//table name should not be plural
 *create table employees(
 empid int primary key,
 name varchar2(30) NOT NULL,
@@ -27,14 +29,16 @@ salary int,
 deptid int references department(id)
 );
 
-Alter department table table – add location field in the department table.
+Alter department table table â€“ add location field in the department table.
 *ALTER TABLE department
   ADD location varchar2(50);
 
-Alter  Employee table – add job, manager , hiredate 
+Alter  Employee table â€“ add job, manager , hiredate 
 *ALTER table employees
+//why extra bracket?
 Add(job varchar2(30) NOT NULL,
 manager varchar2(30)NOT NULL,
+//hiredate data type should be date
 hiredate_id int NOT NULL);
 
 DML
@@ -54,7 +58,7 @@ select * from employees;
 
 
 Fetch unique Jobs from Employee table
-
+//wrong query.  ned all the job names only.
 select *from employees where job='QA';
 
 Fetch all the employees  order by salary
@@ -70,15 +74,16 @@ Fetch all the employees  who are getting salary > some amount
 select * from employees where salary>2000;
 
 Fetch all the employees who joined before some date.
+//asking who joined before particular date, not after particular date
 select * from employees where hiredate>='2018-01-14';
 
 Fetch all the employees , no_of days worked from Employee table.
 
-
+//what is dd?
 select name,datediff(dd,hiredate,sysdate)as datediff from employees 
 
 Fetch all the employees details whose name starting with some character and ending with some other character
-
+//should write single query.
 select * from employees where name  like 's%';
 
 select * from employees where name like '%i';
@@ -93,23 +98,24 @@ select * from employees where hiredate like '%-01-%'
 
 
 Fetch all the employees who are having 4 digits salary.
-
+//wrong query. should only 4digits.  not  morethan 4 digits.
 select * from employees where  LENGTH(salary)>4;
 
 
 Fetch all the employees who are belongs to particular department name;
 select * from department where name='CSE';
 
-Fetch all the employees who‘s salary between from amount1 and amount2
+Fetch all the employees whoâ€˜s salary between from amount1 and amount2
 select * from employees where salary between 2100 and 3700;
 
 Fetch all the employees from given 3 departments
+//wrong query...
 select * from employees where empid in(1,2,3);
 
 Fetch all the employees who salary more than a particular employee( name= ram)
 select  * from employees where salary>(select salary from employees where  name='vishnu');
 
-Fetch all the employees who’s job is same as a particular employee( name= ram)
+Fetch all the employees whoâ€™s job is same as a particular employee( name= ram)
 select * from employees where job=(select job from employees where name='saravana');
 
 Fetch all the employees who are senior to a particular employee( name= ram)
@@ -117,17 +123,18 @@ select * from employees where hiredate<(select hiredate from employees where nam
 
 
 Fetch the highest paid employee in particular department
-
+//why dept=1 two times?
 select name,salary,deptid from employees where salary=(select max(salary) from employees where deptid=11) &deptid=11; 
 
 Fetch the highest paid employees in each department
+//wrong query
 select name,salary,deptid from employees where salary in (select max(salary) from employees group by deptid);
 
 Find the number employees working in particular department.
 select count(*) from employees where name in (select name from employees where deptid=11) and deptid=11;
 
 Find the number employees working in each department.
-
+//how to know dept id?
 select count(*) from employees group by deptid;
 
 
