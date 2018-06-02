@@ -1,0 +1,140 @@
+
+
+
+DDL
+     1.It stands for data definition language.
+     2.It consist of sql commands which is used to define database schema..
+     3.It is mainly used to create and modify the structure of database and objects...
+DDL commands are:
+*CREATE – is used to create the database or its objects.
+*DROP – is used to delete objects from the database..
+*ALTER-is used to alter the structure of the database....
+*TRUNCATE–is used to remove all records from a table, including all spaces allocated for the records are removed....
+*COMMENT –is used to add comments to the data dictionary.....
+*RENAME –is used to rename an object existing in the database......
+
+
+Create a table Department with id name with proper constraints.
+*create table department(
+id int NOT NULL PRIMARY KEY,
+name varchar2(30) NOT NULL);
+
+Create a table Employee with id, name and salary and deptid with proper constraints.
+*create table employees(
+empid int primary key,
+name varchar2(30) NOT NULL,
+salary int,
+deptid int references department(id)
+);
+
+Alter department table table – add location field in the department table.
+*ALTER TABLE department
+  ADD location varchar2(50);
+
+Alter  Employee table – add job, manager , hiredate 
+*ALTER table employees
+Add(job varchar2(30) NOT NULL,
+manager varchar2(30)NOT NULL,
+hiredate_id int NOT NULL);
+
+DML
+1.It stands for data manipulation language.
+
+
+Insert multiple records in each table.
+*insert into department values(11,'CSE','chennai');
+*insert into employees values(1,'saravana',3000,11,'QA','NULL',15);
+
+
+Update the salary of particular employee by 10%
+*UPDATE employees set salary=(salary+salary/10) where name='vishnu';
+
+Fetch all the employees  of the Employee table..
+select * from employees;
+
+
+Fetch unique Jobs from Employee table
+
+select *from employees where job='QA';
+
+Fetch all the employees  order by salary
+select * from employees order by salary asc;
+select * from employees order by salary desc;
+
+
+select * from employees order by salary asc;
+select * from employees order by salary desc;
+
+Fetch all the employees  who are getting salary > some amount
+
+select * from employees where salary>2000;
+
+Fetch all the employees who joined before some date.
+select * from employees where hiredate>='2018-01-14';
+
+Fetch all the employees , no_of days worked from Employee table.
+
+
+select name,datediff(dd,hiredate,sysdate)as datediff from employees 
+
+Fetch all the employees details whose name starting with some character and ending with some other character
+
+select * from employees where name  like 's%';
+
+select * from employees where name like '%i';
+
+Fetch all the employees details whose name starting with some character and exactly having the length( say 6)
+select * from employees where name like '%s' or name like 's%' and length(name)=6
+
+
+Fetch all the employess who joined in a particular month.
+select * from employees where hiredate like '%-01-%'
+
+
+
+Fetch all the employees who are having 4 digits salary.
+
+select * from employees where  LENGTH(salary)>4;
+
+
+Fetch all the employees who are belongs to particular department name;
+select * from department where name='CSE';
+
+Fetch all the employees who‘s salary between from amount1 and amount2
+select * from employees where salary between 2100 and 3700;
+
+Fetch all the employees from given 3 departments
+select * from employees where empid in(1,2,3);
+
+Fetch all the employees who salary more than a particular employee( name= ram)
+select  * from employees where salary>(select salary from employees where  name='vishnu');
+
+Fetch all the employees who’s job is same as a particular employee( name= ram)
+select * from employees where job=(select job from employees where name='saravana');
+
+Fetch all the employees who are senior to a particular employee( name= ram)
+select * from employees where hiredate<(select hiredate from employees where name ='Dinesh')
+
+
+Fetch the highest paid employee in particular department
+
+select name,salary,deptid from employees where salary=(select max(salary) from employees where deptid=11) &deptid=11; 
+
+Fetch the highest paid employees in each department
+select name,salary,deptid from employees where salary in (select max(salary) from employees group by deptid);
+
+Find the number employees working in particular department.
+select count(*) from employees where name in (select name from employees where deptid=11) and deptid=11;
+
+Find the number employees working in each department.
+
+select count(*) from employees group by deptid;
+
+
+
+
+
+
+
+
+jdbc:h2:tcp://localhost/~/db
